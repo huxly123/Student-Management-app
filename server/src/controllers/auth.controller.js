@@ -1,4 +1,14 @@
-const User=require('../models/user.model')
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const newToken = (user) => {
+    return jwt.sign( {user} , process.env.JWT_SECRET_KEY);
+}
+
+
+const User = require('../models/user.model')
+
+
 const register =async (req,res) => {
     let user
     try {
@@ -8,7 +18,9 @@ const register =async (req,res) => {
         
         user = await User.create(req.body);
 
-        return res.status(200).send({user})
+      let token=  newToken(user)
+
+        return res.status(200).send({user,token})
     } catch (err) {
         return res.status(200).send(err.message);
     }
@@ -19,8 +31,20 @@ const Login = async(req,res) => {
         let user = await User.findOne({ contact: req.body.contact });
          
         if (!user) return res.status(400).send("User not found") 
+
+           let match = user.checkPassword(req.body.password);
+
+         
+           if (!match)
+             return res
+               .status(400)
+                .send({ message: "Please check your password" });
         
-        return res.status(200).send(user)
+        let token = newToken(user)
+        
+        req.user=user
+        
+        return res.status(200).send({user,token})
 
     } catch (err) {
         return res.status(400).send(err.message)
