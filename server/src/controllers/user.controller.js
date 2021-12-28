@@ -16,7 +16,7 @@ const authenticate = require("../middlewares/authenticate");
 //   }
 // });
 
-router.get("/",authenticate,authorize(), async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const data = await User.find();
     return res.status(200).send(data);

@@ -4,8 +4,9 @@ const app = express();
 app.use(express.json())
 const {register,Login}=require("./controllers/auth.controller")
 const userController = require("./controllers/user.controller");
+const contestController=require("./controllers/contest.controller")
 app.use("/user", userController)
-
+app.use("/contest",contestController)
 
 app.post("/register", register);
 app.post("/login", Login);
