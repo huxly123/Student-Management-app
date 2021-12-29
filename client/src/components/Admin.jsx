@@ -17,17 +17,17 @@ function Admin() {
     education: "",
     gender: "",
     password: "",
-      contact: "",
-    role:""
+    contact: "",
+    role: "",
   });
-    
-    const [contestformData, setcontestformData] = useState({
-      title: "",
-      type: "",
-      deadline: "",
-        time: "",
-      tags:[]
-    });
+
+  const [contestformData, setcontestformData] = useState({
+    title: "",
+    type: "",
+    deadline: "",
+    time: "",
+    tags: [],
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,40 +37,45 @@ function Admin() {
     });
   };
 
-    const handleconChange = (e) => {
-        const { name, value } = e.target;
-
-        setcontestformData({
-            ...contestformData,
-            
-            [name]:value
-        })
+  const handleconChange = (e) => {
+    if (e.target.name === "tags") {
+      setcontestformData({
+        ...contestformData,
+        [e.target.name]: e.target.value.split(","),
+      });
+    } else {
+      setcontestformData({
+        ...contestformData,
+        [e.target.name]: e.target.value,
+      });
     }
-    
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const data = await axios.post(
         `http://localhost:8080/register`,
         contestformData
       );
-     
     } catch (err) {
       console.log(err.message);
     }
-    }
-    
-    const handleSubmitcont = async (e) => {
-        e.preventDefault();
+  };
 
-   
+  const handleSubmitcont = async (e) => {
+    e.preventDefault();
+
     try {
-      const data = await axios.post(`http://localhost:8080/contest`, formData);
+      const data = await axios.post(
+        `http://localhost:8080/contest`,
+        contestformData
+      );
     } catch (err) {
       console.log(err.message);
     }
-    }
+  };
 
   return (
     <div>
@@ -165,5 +170,3 @@ function Admin() {
 }
 
 export default Admin;
-
-
