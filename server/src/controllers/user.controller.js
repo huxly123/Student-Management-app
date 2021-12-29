@@ -25,8 +25,8 @@ router.get("/", async (req, res) => {
     const totalUserCount = await User.find().countDocuments().lean().exec();
     const totalPages = Math.ceil(totalUserCount / size);
     const offset = (page - 1) * size;
-    const user = await User.find().skip(offset).limit(size).lean().exec();
-    return res.status(200).send({user,totalPages})
+    const user = await User.find().lean().exec();
+    return res.status(200).send(user)
   } catch (err) {
      console.log(err.message);
     return res.status(400).send(err.message);
