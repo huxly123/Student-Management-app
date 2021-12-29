@@ -5,7 +5,7 @@ const router = express.Router();
 
 const Contest=require("../models/contest.model")
 
-router.post("/",authenticate,authorize(), async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const data = await Contest.create(req.body);
         return res.status(200).send(data);
