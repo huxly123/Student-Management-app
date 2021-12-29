@@ -10,6 +10,9 @@ function Admin() {
   // const [pass, setPass] = useState("");
   // const [number, setNumber] = useState("");
 
+  const token =JSON.parse(localStorage.getItem("smatoken"))
+    
+
   const [formData, setFormdata] = useState({
     name: "",
     age: "",
@@ -57,7 +60,7 @@ function Admin() {
     try {
       const data = await axios.post(
         `http://localhost:8080/register`,
-        contestformData
+        formData
       );
     } catch (err) {
       console.log(err.message);
@@ -70,7 +73,12 @@ function Admin() {
     try {
       const data = await axios.post(
         `http://localhost:8080/contest`,
-        contestformData
+        contestformData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
     } catch (err) {
       console.log(err.message);
@@ -79,7 +87,9 @@ function Admin() {
 
   return (
     <div>
+      <h1>Admin</h1>
       {/* student form */}
+      <h1>Student Form</h1>
       <form className={style.formbody} onSubmit={handleSubmit}>
         <input
           type="text"
@@ -131,6 +141,7 @@ function Admin() {
         />
         <input type="submit" />
       </form>
+      <h1>Contact Form</h1>
       {/* contest form */}
       <form className={style.formbody} onSubmit={handleSubmitcont}>
         <input
