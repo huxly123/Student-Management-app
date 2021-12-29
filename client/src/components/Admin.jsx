@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import style from "./admin.module.css";
 import axios from "axios";
 function Admin() {
-  // const [name, setName] = useState("");
-  // const [age, setAge] = useState("");
-  // const [city, setCity] = useState("");
-  // const [education, setEducation] = useState("");
-  // const [gender, setGender] = useState("");
-  // const [pass, setPass] = useState("");
-  // const [number, setNumber] = useState("");
 
   const token =JSON.parse(localStorage.getItem("smatoken"))
     
